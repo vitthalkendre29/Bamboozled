@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bamboozled - TECHTONIC 2K24</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&display=swap");
+        
+        :root {
+            --primary-color: #1c0f2d; /* Dark purple from landing page */
+            --secondary-color: #2d0359; /* Purple from landing page */
+            --accent-color: #c4298e; /* Pink from landing page */
+            --light-bg: #f8fafc;
+            --white: #FFFFFF;
+            --border-color: rgba(196, 41, 142, 0.3); /* Border color with landing page accent */
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --success: #059669;
+            --error: #DC2626;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none; /* Disable text selection */
+            font-family: "Exo 2", sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-primary);
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles from landing page */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1300px;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 130px;
+            height: 130px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(196, 41, 142, 0.7);
+            animation: pulse 2s infinite;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo:before {
+            content: "";
+            position: absolute;
+            width: 150%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(45deg);
+            top: -30px;
+            left: -100px;
+            animation: shine 3s infinite;
+        }
+
+        .title {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title h1 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 35px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-left: 30px;
+        }
+
+        .title h2 {
+            font-family: "Orbitron", sans-serif;
+            font-size: 50px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #2d0359, #c4298e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            animation: colorShift 5s infinite;
+            margin-left: 30px;
+
+        }
+        
+        /* Page title styles */
+        .page-title {
+            font-family: "Orbitron", sans-serif;
+            font-size: 75px;
+            font-weight: 900;
+            background: linear-gradient(90deg, #450787, #da2c9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .container {
+            display: flex;
+            width: 90%;
+            height: 700px;
+            max-width: 1400px;
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(45, 3, 89, 0.5);
+            border: 1px solid var(--border-color);
+        }
+        
+        .section {
+            padding: 30px;
+        }
+        
+        .left {
+            flex: 1;
+            background: var(--primary-color);
+            color: var(--white);
+            overflow-y: auto; /* Add scrolling for overflow content */
+            max-height: 700px;
+        }
+        
+        /* Custom scrollbar for the problems section */
+        .left::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .left::-webkit-scrollbar-track {
+            background: rgba(45, 3, 89, 0.1);
+            border-radius: 4px;
+        }
+        
+        .left::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        .right {
+            flex: 1;
+            background: rgba(20, 20, 20, 0.8);
+        }
+        
+        h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-family: "Orbitron", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .left h2 {
+            color: var(--accent-color);
+            border-bottom: 1px solid rgba(196, 41, 142, 0.3);
+            padding-bottom: 12px;
+            position: sticky;
+            top: 0;
+            background: var(--primary-color);
+            z-index: 10;
+            padding-top: 10px;
+        }
+        
+        .problem-card {
+            background: rgba(45, 3, 89, 0.2);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 3px solid var(--accent-color);
+        }
+        
+        .problem-card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--accent-color);
+            font-weight: 600;
+            font-family: "Orbitron", sans-serif;
+        }
+        
+        .problem-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        /* Custom scrollbar for paragraphs */
+        .problem-card p::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        .problem-card p::-webkit-scrollbar-track {
+            background: rgba(45, 3, 89, 0.1);
+            border-radius: 3px;
+        }
+        
+        .problem-card p::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+        
+        .example {
+            background: rgba(20, 20, 20, 0.5);
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .timer-box {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 16px;
+            border-radius: 6px;
+            margin-bottom: 24px;
+            text-align: center;
+            border: 1px solid rgba(196, 41, 142, 0.3);
+            box-shadow: 0 0 10px rgba(196, 41, 142, 0.5);
+        }
+        
+        #timer {
+            font-size: 28px;
+            font-weight: 600;
+            display: block;
+            margin-top: 5px;
+            color: var(--white);
+            font-family: "Orbitron", sans-serif;
+        }
+        
+        .label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--accent-color);
+            font-weight: 500;
+            font-family: "Orbitron", sans-serif;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 180px;
+            background: rgba(45, 3, 89, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px;
+            color: var(--white);
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            resize: none;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(196, 41, 142, 0.3);
+        }
+        
+        textarea::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        select {
+            background: rgba(45, 3, 89, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 12px;
+            color: var(--white);
+            font-size: 14px;
+            appearance: none;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(196, 41, 142, 0.3);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #2d0359, #c4298e);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: "Orbitron", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(196, 41, 142, 0.4);
+        }
+        
+        button:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            top: 0;
+            left: -100%;
+            transition: all 0.6s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(196, 41, 142, 0.6);
+        }
+        
+        button:hover:before {
+            left: 100%;
+        }
+        
+        button:active {
+            transform: translateY(-1px);
+        }
+        
+        button:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        
+        .note {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 14px;
+        }
+        
+        /* Animation keyframes */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 10px rgba(196, 41, 142, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(196, 41, 142, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 10px rgba(196, 41, 142, 0.5);
+            }
+        }
+
+        @keyframes shine {
+            0% {
+                left: -100px;
+            }
+            20% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        
+        @keyframes colorShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                width: 95%;
+                height: auto;
+            }
+            
+            .left {
+                max-height: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .title h1 {
+                font-size: 24px;
+            }
+
+            .title h2 {
+                font-size: 28px;
+            }
+            
+            .page-title {
+                font-size: 26px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+    <!-- Header from landing page -->
+    <header>
+        <div class="logo">
+            <span><img src="logo.png" alt="logo" /></span>
+        </div>
+        <div class="title">
+            <h1>Sinhgad</h1>
+            <h2>TECHTONIC 2K25</h2>
+        </div>
+    </header>
+    
+    <!-- Page title -->
+    <h1 class="page-title">Bamboozled</h1>
+    
+    <div class="container">
+        <!-- Left Section: Problem Statements -->
+        <div class="section left">
+            <h2>Coding Challenges</h2>
+            
+            <div id="problemContainer">
+                <!-- Problems will be inserted here dynamically -->
+            </div>
+        </div>
+        
+        <!-- Right Section: Timer, Input, File Selection & Download -->
+        <div class="section right">
+            <div class="timer-box">
+                <h2>Time Remaining</h2>
+                <span id="timer"></span>
+            </div>
+            
+            <p class="label">Solution :</p>
+            <textarea id="modifiedInput" placeholder="Start typing your solution here..." oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            
+            <div class="controls">
+                <label class="label" for="fileType">Output Format:</label>
+                <select id="fileType">
+                    <option value="txt">Text (.txt)</option>
+                    <option value="cpp">C++ (.cpp)</option>
+                    <option value="java">Java (.java)</option>
+                    <option value="js">JavaScript (.js)</option>
+                    <option value="py">Python (.py)</option>
+                </select>
+                
+                <button id="downloadBtn" onclick="createFile()">Download Solution</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>    
+        // Define problem sets
+        const paragraphProblems = [
+            {
+                id: 5,
+                title: "Text Analysis",
+                description: "Write a program that analyzes a text passage to count the frequency of each word, identify the most common words, and calculate the average word length. The program should be case-insensitive and ignore punctuation. Additionally, implement a feature to identify sentences with more than 20 words, as these may be candidates for simplification. Your solution should efficiently handle large texts and provide a summary report with the following metrics: total word count, unique word count, average word length, most frequent words (top 5), longest word, and a list of potentially complex sentences.",
+                example: "Input: Text file → Output: Word frequency dictionary, metrics report"
+            },
+            {
+                id: 6,
+                title: "Data Compression Algorithm",
+                description: "Design and implement a lossless data compression algorithm that can efficiently compress and decompress text files. Your algorithm should achieve a balance between compression ratio and processing speed. The implementation should include both compression and decompression functions, handle various types of input texts (including binary data represented as text), and provide metrics about the compression performance. Documentation should explain the approach, the time and space complexity of your algorithm, and compare its performance against standard compression algorithms like Huffman coding or LZW compression. Bonus points for implementing multiple compression techniques and allowing the user to choose between them based on their priorities.",
+                example: "Input: Text file → Output: Compressed file with at least 20% size reduction"
+            },
+            {
+                id: 7,
+                title: "Path Finding Algorithm",
+                description: "Implement a pathfinding algorithm to find the shortest path between two points in a 2D grid that contains obstacles. The grid is represented as a matrix where 0 indicates a free cell and 1 indicates an obstacle. The algorithm should efficiently find the shortest path from a starting position to a target position, avoiding all obstacles. Your implementation should include at least two different pathfinding algorithms (e.g., A*, Dijkstra's, BFS) and compare their performance in terms of execution time and path optimality. The solution should visualize the grid, the obstacles, and the computed path. Additionally, implement a feature that allows for diagonal movement with a customizable cost factor.",
+                example: "Input: Grid matrix, start position, end position → Output: Shortest path coordinates, path length, algorithm performance metrics"
+            },
+            {
+                id: 8,
+                title: "Natural Language Processing",
+                description: "Develop a program that performs sentiment analysis on text input, classifying it as positive, negative, or neutral. Your solution should use a combination of lexicon-based approaches and basic machine learning techniques. The program should preprocess the text (removing stopwords, stemming, tokenization), extract relevant features, and apply a classification algorithm. Include a training mode where the system can learn from labeled examples and improve its accuracy over time. Your implementation should provide not just the overall sentiment score but also identify the most influential words or phrases that contributed to the classification. Additionally, create a simple mechanism to handle negations and intensifiers in the text, as they can significantly alter the sentiment.",
+                example: "Input: 'The product is excellent but the customer service was disappointing.' → Output: Mixed sentiment (0.2), Positive aspects: 'excellent', Negative aspects: 'disappointing'"
+            }
+        ];
+        
+        const equationProblems = [
+            {
+                id: 1,
+                title: "Linear Equation Solver",
+                description: "Write a program to solve a system of linear equations using Cramer's rule: ax + by = c and dx + ey = f.",
+                example: "Input: a=2, b=3, c=8, d=1, e=1, f=4 → Output: x=1, y=2"
+            },
+            {
+                id: 2,
+                title: "Quadratic Equation Solver",
+                description: "Write a program to find the roots of a quadratic equation ax² + bx + c = 0 using the quadratic formula.",
+                example: "Input: a=1, b=-5, c=6 → Output: x=2, x=3"
+            },
+            {
+                id: 3,
+                title: "Matrix Multiplication",
+                description: "Write a program to multiply two matrices A and B and return the resulting matrix C.",
+                example: "Input: A=[[1,2],[3,4]], B=[[5,6],[7,8]] → Output: C=[[19,22],[43,50]]"
+            },
+            {
+                id: 4,
+                title: "Differential Equation",
+                description: "Write a program to solve the first-order ordinary differential equation dy/dx = f(x,y) using the Euler method.",
+                example: "Input: dy/dx = x + y, y(0) = 1, step size = 0.1, interval [0,1] → Output: y(1) ≈ 4.7"
+            }
+        ];
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputField = document.getElementById("modifiedInput");
+            let currentLevel = 1; // Default to level 1
+            const ASCII_SHIFT = 3;
+            let timeLeft = 300; // 5 minutes in seconds
+            
+            // Function to get a random item from an array
+            function getRandomItem(arr) {
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+            
+            // Select one random problem from each category
+            const randomEquationProblem = getRandomItem(equationProblems);
+            const randomParagraphProblem = getRandomItem(paragraphProblems);
+            
+            // Display the selected random problems
+            const problemContainer = document.getElementById('problemContainer');
+            problemContainer.innerHTML = '';
+            
+            // Create and append equation problem card
+            const equationCard = document.createElement('div');
+            equationCard.className = 'problem-card';
+            equationCard.innerHTML = `
+                <h3>Problem ${randomEquationProblem.id}: ${randomEquationProblem.title}</h3>
+                <p>${randomEquationProblem.description}</p>
+                <div class="example">
+                    <p><strong>Example:</strong> ${randomEquationProblem.example}</p>
+                </div>
+            `;
+            problemContainer.appendChild(equationCard);
+            
+            // Create and append paragraph problem card
+            const paragraphCard = document.createElement('div');
+            paragraphCard.className = 'problem-card';
+            paragraphCard.innerHTML = `
+                <h3>Problem ${randomParagraphProblem.id}: ${randomParagraphProblem.title}</h3>
+                <p>${randomParagraphProblem.description}</p>
+                <div class="example">
+                    <p><strong>Example:</strong> ${randomParagraphProblem.example}</p>
+                </div>
+            `;
+            problemContainer.appendChild(paragraphCard);
+
+            window.setLevel = function (level) {
+                if (level === 1 || level === 2) {
+                    currentLevel = level;
+                    console.log(`Level changed to ${level}`);
+                } else {
+                    console.error("Invalid level! Choose 1 or 2.");
+                }
+            };
+
+            function transformCharacter(char, level) {
+                if (level === 1) {
+                    if (char.match(/[a-zA-Z]/)) {
+                        if (char.match(new RegExp(`[${String.fromCharCode(122 - ASCII_SHIFT + 1)}-z${String.fromCharCode(90 - ASCII_SHIFT + 1)}-Z]`))) {
+                            return String.fromCharCode(char.charCodeAt(0) - (26 - ASCII_SHIFT));
+                        }
+                        return String.fromCharCode(char.charCodeAt(0) + ASCII_SHIFT);
+                    }
+                } else if (level === 2) {
+                    return String.fromCharCode(char.charCodeAt(0) + ASCII_SHIFT);
+                }
+                return char;
+            }
+
+            function updateTimer() {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById("timer").innerText = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft === 0) {
+                    disableInputAndDownload();
+                } else {
+                    timeLeft--;
+                    setTimeout(updateTimer, 1000);
+                }
+            }
+
+            function disableInputAndDownload() {
+                inputField.disabled = true;
+                document.querySelector("button").disabled = true;
+                createFile();
+            }
+
+            inputField.addEventListener("keypress", function (event) {
+                event.preventDefault();
+                let transformedChar = transformCharacter(event.key, currentLevel);
+                this.value += transformedChar;
+            });
+
+
+            function createFile() {
+                let transformedText = inputField.value;
+                let fileType = document.getElementById("fileType").value;
+                let fileContent = "";
+                let filename = "solution." + fileType;
+
+                switch (fileType) {
+                    case "txt":
+                        fileContent = transformedText;
+                        break;
+                    case "cpp":
+                        fileContent = `#include <iostream>\nint main() {\n    std::cout << \"${transformedText}\" << std::endl;\n    return 0;\n}`;
+                        break;
+                    case "java":
+                        fileContent = `public class Solution {\n    public static void main(String[] args) {\n        System.out.println(\"${transformedText}\");\n    }\n}`;
+                        break;
+                    case "js":
+                        fileContent = `console.log(\"${transformedText}\");`;
+                        break;
+                    case "py":
+                        fileContent = `print(\"${transformedText}\")`;
+                        break;
+                    default:
+                        console.error("Invalid file type!");
+                        return;
+                }
+
+                let blob = new Blob([fileContent], { type: "text/plain" });
+                let link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            document.getElementById("downloadBtn").addEventListener("click", createFile);
+
+            document.addEventListener("copy", function(e) { e.preventDefault(); });
+            document.addEventListener("cut", function(e) { e.preventDefault(); });
+            document.addEventListener("paste", function(e) { e.preventDefault(); });
+            document.addEventListener("keydown", function(e) {
+                if ((e.ctrlKey || e.metaKey) && ["c", "v", "x"].includes(e.key)) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
