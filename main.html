@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bamboozled - TECHTONIC 2K24</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body oncontextmenu="return false;">
+    <!-- Header from landing page -->
+    <header>
+        <div class="logo">
+            <span><img src="logo.png" alt="logo" /></span>
+        </div>
+        <div class="title">
+            <h1>Sinhgad</h1>
+            <h2>TECHTONIC 2K25</h2>
+        </div>
+    </header>
+    
+    <!-- Page title -->
+    <h1 class="page-title">Bamboozled</h1>
+    
+    <div class="container">
+        <!-- Left Section: Problem Statements -->
+        <div class="section left">
+            <h2>Coding Challenges</h2>
+            
+            <div id="problemContainer">
+                <!-- Problems will be inserted here dynamically -->
+            </div>
+        </div>
+        
+        <!-- Right Section: Timer, Input, File Selection & Download -->
+        <div class="section right">
+            <div class="timer-box">
+                <h2>Time Remaining</h2>
+                <span id="timer"></span>
+            </div>
+            
+            <p class="label">Solution :</p>
+            <textarea id="modifiedInput" placeholder="Start typing your solution here..." oncopy="return false" oncut="return false" onpaste="return false"></textarea>
+            
+            <div class="controls">
+                <label class="label" for="fileType">Output Format:</label>
+                <select id="fileType">
+                    <option value="txt">Text (.txt)</option>
+                    <option value="cpp">C++ (.cpp)</option>
+                    <option value="java">Java (.java)</option>
+                    <option value="js">JavaScript (.js)</option>
+                    <option value="py">Python (.py)</option>
+                </select>
+                
+                <button id="downloadBtn" onclick="createFile()">Download Solution</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="main.js"></script>
+</body>
+</html>
